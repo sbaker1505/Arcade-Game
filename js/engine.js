@@ -27,9 +27,6 @@ var Engine = (function(global) {
 
     canvas.width = 505;
     canvas.height = 586;
-    ctx.rect(0,0,canvas.width,canvas.height)
-    ctx.fillStyle = "red";
-    ctx.fill();
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -183,4 +180,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.canvas = canvas;
 })(this);
