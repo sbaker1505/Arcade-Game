@@ -6,9 +6,11 @@ var Enemy = function(row) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -101;
+    this.x = -cellW;
     this.y = (cellH * row) - (cellH * 0.3);
-    this.row = row
+    this.row = row;
+    this.width = cellW;
+    this.height = cellH;
 
 };
 
@@ -25,9 +27,13 @@ Enemy.prototype.update = function(dt) {
     } else if (this.row === 3){
       this.x += dt * 375;
     }
-    if (this.x >= 505){
-      this.x = 505;
-    }
+
+    // removes enemy from allEnemies Array once enemy is off canvas
+    allEnemies.forEach(function(enemy, index){
+      if (enemy.x >= 505) {
+        allEnemies.splice(index, 1);
+      }
+    })
 };
 
 // Draw the enemy on the screen, required method for game
@@ -41,22 +47,36 @@ Enemy.prototype.render = function() {
 var cellW = 101;
 var cellH = 83;
 
+// player class
 class Player {
   constructor(){
     this.x = cellW * 2;
     this.y = cellH * 4.5;
+    this.width = cellW;
+    this.height = cellH;
 
     this.sprite = 'images/char-horn-girl.png';
   }
 
+  // upon collision with a star, updates starCount, calls new star, and run gameUpdate function
   update(){
-
+    if (player.x < star.x + (star.width * 0.5) &&
+     player.x + (player.width * 0.5) > star.x &&
+     player.y < star.y + (star.height * 0.5) &&
+     (player.height * 0.5) + player.y > star.y) {
+      // if all true, star captured!
+      starCount++;
+      addStar();
+      gameUpdate();
+    }
   }
 
+  // draws the player on the canvas
   render(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  // moves player direction one cell based on keystroke
   handleInput(dir){
     if (dir === 'up') {
       this.y -= cellH;
@@ -82,34 +102,79 @@ class Player {
   }
 }
 
+// star class
+class Star {
+  constructor(row, col){
+    this.x = (cellW * col);
+    this.y = (cellH * row) - (cellH * 0.15);
+    this.width = cellW;
+    this.height = cellH;
+    this.sprite = 'images/Star.png';
+  }
+
+  // draws the star to the canvas
+  render(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
 let player = new Player();
+let star;
+let starCount = 0;
 
+// adds a new enemy to allEnemies array
 function addEnemy() {
   const row = Math.floor(Math.random() * 3 + 1);
   allEnemies.push(new Enemy(row))
-  // removes enemy from allEnemies Array once enemy is off canvas
-  allEnemies.forEach(function(enemy, index){
-    if (enemy.x === 505) {
-      allEnemies.splice(index, 1);
-    }
-  })
 }
-addEnemy();
-setInterval(addEnemy, 500);
 
+// adds a new enemy at interval
+setInterval(addEnemy, 750);
 
-function collision() {
-  for (enemy of allEnemies) {
-    if (enemy.x + 101 === player.x) {
-      console.log('ouch!')
+// adds a new star to a ramdon row and column
+function addStar(){
+  const row = Math.floor(Math.random() * 3 + 1);
+  const col = Math.floor(Math.random() * 5 + 0);
+  star = new Star(row, col);
+}
+
+// checks for collisions of player and enemies
+function checkCollisions() {
+  allEnemies.forEach(function(enemy){
+    if (player.x < enemy.x + (enemy.width * 0.5) &&
+     player.x + (player.width * 0.5) > enemy.x &&
+     player.y < enemy.y + (enemy.height * 0.5) &&
+     (player.height * 0.5) + player.y > enemy.y) {
+      // if all true, collision detected!
+      player = new Player();
+      starCount = 0;
+      gameUpdate();
     }
+  });
+}
+
+// adds html so log the star count and popup
+const tagId = t => idName => data => `<${t} id="${idName}">${data}</${t}>`;
+const tag = t => data => `<${t}>${data}</${t}>`;
+document.querySelector('body').insertAdjacentHTML('afterbegin', tagId('div')('game-text')(''));
+
+// updates the star count everytime a star has been collected
+function gameUpdate(){
+  const gameText = tag('p')(`Stars = ${starCount}`);
+  document.getElementById('game-text').innerHTML = gameText;
+
+  // popup once game has been won
+  if (starCount === 10){
+    document.querySelector('body').insertAdjacentHTML('afterbegin', tagId('div')('game-won')(''));
+    const gamePopup= document.getElementById('game-won');
+    gamePopup.innerHTML = tag('h1')('Congradulations!');
+    player = new Player();
   }
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -123,3 +188,8 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// functions called at start of a new game
+gameUpdate();
+addStar();
+addEnemy();

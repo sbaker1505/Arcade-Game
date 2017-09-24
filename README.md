@@ -1,6 +1,30 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade Game (based on Frogger)
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This is an Arcade Game developed as part of the Udacity [[Front-End Web Developer](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001) Nanodegree. Please use the Github link to play and test your memory!
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+[★ ARCADE GAME ★](https://sbaker1505.github.io/Arcade-Game/)
+
+--------------------------------------------------------------------------------
+
+### Game Objectives
+
+Move the player across the road to collect a total of 10 stars without getting run over by any bugs.
+
+--------------------------------------------------------------------------------
+
+## Developer Notes
+
+The file requires 3 javascript files to run property:
+  1. **engine.js** - This is the game engine developed by Udacity Team
+  2. **resources.js** - This is the imaging processor developed by Udacity Team
+  3. **app.js** - This contains the gameplay components developed by Scott Baker.
+
+#### Known Bugs
+
+There are currently no known bugs. If you find one, please leave a comment describing the bug.
+
+--------------------------------------------------------------------------------
+
+## Authors
+
+- Scott Baker - _Initial work_ - [sbaker1505](https://github.com/sbaker1505)
