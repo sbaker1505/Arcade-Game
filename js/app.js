@@ -171,7 +171,7 @@ function gameUpdate(){
   if (starCount === 10){
     document.querySelector('body').insertAdjacentHTML('afterbegin', tagId('div')('game-won')(''));
     const gamePopup= document.getElementById('game-won');
-    gamePopup.innerHTML = tag('h1')('Congradulations!');
+    gamePopup.innerHTML = tag('h1')('Congratulations!');
     player = new Player();
   }
 }
