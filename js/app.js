@@ -6,11 +6,11 @@ var Enemy = function(row) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -cellW;
-    this.y = (cellH * row) - (cellH * 0.3);
+    this.x = -CELLW;
+    this.y = (CELLH * row) - (CELLH * 0.3);
     this.row = row;
-    this.width = cellW;
-    this.height = cellH;
+    this.width = CELLW;
+    this.height = CELLH;
 
 };
 
@@ -44,26 +44,26 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var cellW = 101;
-var cellH = 83;
+const CELLW = 101;
+const CELLH = 83;
 
 // player class
 class Player {
   constructor(){
-    this.x = cellW * 2;
-    this.y = cellH * 4.5;
-    this.width = cellW;
-    this.height = cellH;
+    this.x = CELLW * 2;
+    this.y = CELLH * 4.5;
+    this.width = CELLW;
+    this.height = CELLH;
 
     this.sprite = 'images/char-horn-girl.png';
   }
 
   // upon collision with a star, updates starCount, calls new star, and run gameUpdate function
   update(){
-    if (player.x < star.x + (star.width * 0.5) &&
-     player.x + (player.width * 0.5) > star.x &&
-     player.y < star.y + (star.height * 0.5) &&
-     (player.height * 0.5) + player.y > star.y) {
+    if (this.x < star.x + (star.width * 0.5) &&
+     this.x + (this.width * 0.5) > star.x &&
+     this.y < star.y + (star.height * 0.5) &&
+     (this.height * 0.5) + this.y > star.y) {
       // if all true, star captured!
       starCount++;
       addStar();
@@ -79,24 +79,24 @@ class Player {
   // moves player direction one cell based on keystroke
   handleInput(dir){
     if (dir === 'up') {
-      this.y -= cellH;
+      this.y -= CELLH;
       if (this.y < 0) {
-        this.y += cellH;
+        this.y += CELLH;
       }
     } else if (dir === 'down') {
-      this.y += cellH;
-      if (this.y > cellH * 5) {
-        this.y -= cellH;
+      this.y += CELLH;
+      if (this.y > CELLH * 5) {
+        this.y -= CELLH;
       }
     } else if (dir === 'left') {
-      this.x -= cellW;
+      this.x -= CELLW;
       if (this.x < 0){
-        this.x += cellW;
+        this.x += CELLW;
       }
     } else if (dir === 'right') {
-      this.x += cellW;
-      if (this.x > cellW * 4){
-        this.x -= cellW;
+      this.x += CELLW;
+      if (this.x > CELLW * 4){
+        this.x -= CELLW;
       }
     }
   }
@@ -105,10 +105,10 @@ class Player {
 // star class
 class Star {
   constructor(row, col){
-    this.x = (cellW * col);
-    this.y = (cellH * row) - (cellH * 0.15);
-    this.width = cellW;
-    this.height = cellH;
+    this.x = (CELLW * col);
+    this.y = (CELLH * row) - (CELLH * 0.15);
+    this.width = CELLW;
+    this.height = CELLH;
     this.sprite = 'images/Star.png';
   }
 
