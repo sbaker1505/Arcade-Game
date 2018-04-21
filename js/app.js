@@ -139,7 +139,7 @@ function checkCollisions() {
      (player.height * 0.5) + player.y > enemy.y) {
       // if all true, collision detected!
       player = new Player();
-      starCount = 0;
+      starCount--;
       gameUpdate();
     }
   });
